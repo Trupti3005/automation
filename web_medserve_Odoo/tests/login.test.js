@@ -1,6 +1,6 @@
 describe('Web Login', () => {
   describe('Web Form', () => {
-    it('should login sucessfully with correct credentilas', async () => {
+    it('should login sucessfully with correct credentilas details', async () => {
 
       await browser.url('https://testmedserve.ethicsgroup.in/web/login');
       await browser.pause(2000);
