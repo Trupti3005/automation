@@ -58,7 +58,7 @@ describe('Web Login', () => {
     })
     
     
-    it('Should Fill pupose fill + vendor  on PO + payment terms', async () => {
+    it('Should Fill pupose fill + vendor  on Purchase order + payment terms', async () => {
 
       //Fill purpose+ Vendor + Payment temrs
       const purposee= await $("(//input[@id='purpose_0'])[1]");
