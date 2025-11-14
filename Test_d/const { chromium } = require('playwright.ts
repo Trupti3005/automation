@@ -1,0 +1,41 @@
+const { chromium } = require('playwright');
+
+(async () => {
+  const browser = await chromium.launch();
+  const page = await browser.newPage();
+
+  // 1. Blank User Name and Password Validation
+  await page.goto('http://qa.gtpos.ethicstechnology.net/');
+  await page.click('button:has-text("Login")');
+  // Expect validation error for blank fields
+  await page.waitForSelector('text=Please enter user name or password', { timeout: 3000 });
+
+  // 2. Invalid credentials
+  await page.fill('input[name="username"]', 'Admin');
+  await page.fill('input[name="password"]', 'wrongpassword');
+  await page.click('button:has-text("Login")');
+  await page.waitForSelector('text=Incorrect user name or password', { timeout: 3000 });
+
+  // 3. Valid login
+  await page.fill('input[name="username"]', 'Admin', { force: true });
+  await page.fill('input[name="password"]', 'Admin@123', { force: true });
+  await page.click('button:has-text("Login")');
+  await page.waitForSelector('text=Dashboard');
+
+  // 4. Forgot Password Flow
+  await page.goto('http://qa.gtpos.ethicstechnology.net/');
+  await page.click('text=Forgot Password');
+  await page.fill('input[name="mobile"]', '7984641979');
+  await page.click('button:has-text("Send OTP")');
+  await page.waitForSelector('text=OTP Verification');
+  // Simulate input of OTP
+  await page.fill('input[name="otp"]', '123456');
+  await page.click('button:has-text("Verify OTP")');
+  // If password reset is next, fill reset fields:
+  // await page.fill('input[name="newPassword"]', 'NewPassword@123');
+  // await page.click('button:has-text("Reset Password")');
+  // Next, log in with new password if changed
+
+  console.log('All login validation and forgot password tests passed!');
+  await browser.close();
+})();
