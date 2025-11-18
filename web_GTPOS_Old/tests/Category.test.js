@@ -1,6 +1,6 @@
 describe('wer Login', () => {
     describe('Web Form' , () => {
-        it('should add Batch', async () =>{
+        it('BUtton should be present', async () =>{
             await browser.url ('http://qa.gtpos.ethicstechnology.net/');
 
             const username = await $('[name ="userId"]');
